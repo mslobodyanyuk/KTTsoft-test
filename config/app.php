@@ -146,20 +146,14 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
-		
-		//Collective\Html\HtmlServiceProvider::class,
-		'Illuminate\View\ViewServiceProvider',
-		'Illuminate\Html\HtmlServiceProvider',
+        Illuminate\View\ViewServiceProvider::class,
 
-        //?????
-      // 'Illuminate\Database\Query\Builder',
-		
-		//Illuminate\Html\HtmlServiceProvider::class,
-		
-		///???Collective\Html\HtmlServiceProvider,
-		
-		//'Collective\Html\HtmlServiceProvider',
-		//Illuminate\Html\HtmlServiceProvider::class,
+        // ???
+        //'Illuminate\Html\HtmlServiceProvider',
+
+        //!!! bindShared() deprecated error
+        Collective\Html\HtmlServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -168,9 +162,9 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-		
 
-		
+
+
     ],
 
     /*
@@ -217,16 +211,15 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
-
-        //??????????????
         'Builder'   => Illuminate\Database\Query\Builder::class,
-       // 'Builder'   => 'Illuminate\Database\Query\Builder',
 
-		'Form'     => 'Illuminate\Html\FormFacade',
-		'Html'     => 'Illuminate\Html\HtmlFacade',
-		
-		
+        ///???
+        //'Form'     => 'Illuminate\Html\FormFacade',
+        //'Html'     => 'Illuminate\Html\HtmlFacade',
 
+        //!!! bindShared() deprecated error
+        'Form'     => Collective\Html\FormFacade::class,
+        'Html'     => Collective\Html\HtmlFacade::class,
     ],
 
 ];

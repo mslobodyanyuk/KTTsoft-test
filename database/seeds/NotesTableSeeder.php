@@ -12,15 +12,24 @@ class NotesTableSeeder extends Seeder
      */
     public function run()
     {
+        $dirUpl = 'public/upl';
+
+        if (file_exists($dirUpl)){
+            chdir($dirUpl);
+        }
+        else {
+            chdir('public');
+            if (mkdir('upl', 0777)) {
+                chdir('upl');
+            }
+        }
+
         DB::table('notes')->insert(['name' => 'TEST1.txt', 'directory_name' => '1']);
         DB::table('notes')->insert(['name' => 'TEST2.txt', 'directory_name' => '1']);
         DB::table('notes')->insert(['name' => 'TEST1.txt', 'directory_name' => '2']);
         DB::table('notes')->insert(['name' => 'TEST2.txt', 'directory_name' => '2']);
         DB::table('notes')->insert(['name' => 'TEST1.txt', 'directory_name' => '3']);
         DB::table('notes')->insert(['name' => 'TEST2.txt', 'directory_name' => '3']);
-
-        $dirUpl = 'public/upl';
-        chdir($dirUpl);
 
         if (mkdir( '1' , 0777 )) {
             \File::put('1/TEST1.txt', 'content TEST1.txt');
