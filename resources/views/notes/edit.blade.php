@@ -15,23 +15,20 @@
     </div>
     <div class="form-group">
         <div class="col-sm-7">
-            {!! Form::label('Directory id', 'Directory name:') !!}
+            {!! Form::label('directoryName', 'Directory name:') !!}
             {!! Form::text('directory_name', null, ['class' => 'form-control', 'readonly' => 'true']) !!}
         </div>
     </div>
     <div class="form-group">
-        <label for="editor1" class="col-sm-7 control-label">File contents:</label>
         <div class="col-sm-7">
-           <!-- <textarea name="editor1" id="editor1" class="col-sm-12" > -->
-            <textarea class="form-control" rows="5"  name="editor1" cols="50" id="editor1">
-                {{\File::get('upl/'.$note->directory_name.'/'.$note->name)}}
-            </textarea>
+            {!! Form::label('fileContents', 'File contents:') !!}
+            {!! Form::textarea('editor1', $contents, ['class' => 'form-control', 'size' => '50x5']) !!}
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-7">
-            {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
-        </div>
-    </div>
-    {!! Form::close() !!}
+  </div>
+  <div class="form-group">
+      <div class="col-sm-7">
+          {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
+      </div>
+  </div>
+  {!! Form::close() !!}
 @stop

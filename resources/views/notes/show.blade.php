@@ -23,19 +23,10 @@
         </div>
         <div class="form-group">
             <label for="editor1" class="col-sm-2 control-label">File contents:</label>
-            <div class="col-sm-5"><!--\File::get('upl/'.$note->directory_id.'/'.$note->name)}}-->
-                <textarea class="form-control" rows="5" placeholder="Note text:" name="editor1" cols="50" id="editor1" readonly></textarea>
+            <div class="col-sm-5">
+                <textarea class="form-control" rows="5" placeholder="Note text:" name="editor1" cols="50" id="editor1" readonly>{{$contents}}</textarea>
             </div>
         </div>
-
-        <script type="text/javascript">
-            <?php $path = '/upl/'.$note->directory_name.'/'.$note->name;?>
-            var content = "<?php echo $path;?>";
-            $(document).ready(function() {
-                  $('#editor1').load(content);
-            });
-        </script>
-
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-5">
                 <a href="{{ url('notes')}}" class="btn btn-primary">Back</a>

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 use App\Note;
 use App\Http\Requests;
 use Request;
-use App\Http\Dirs;
+use App\Http\DirUploadFileStructure;
+use App\Http\CheckStructureService;
 use Symfony\Component\HttpFoundation\File;
 class NoteController extends Controller
 {
-    //
     /**
      * Display a listing of the resource.
      *
@@ -16,11 +16,23 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $dir = new Dirs;
-        $params = $dir->GetDirContent("upl", $offs="", $content);
+        $uplPath = config('parameters.uplPath');
+
+        $check = new CheckStructureService($uplPath);
+        $check->init();
+
+        $uplName = config('parameters.uplName');
+
+        $dir = new DirUploadFileStructure;
+        $params = $dir->getDirContent($uplName, $offs="", $content);
+
+        $tagMarkers = ['brake','boldOpen', 'boldClose', 'ahrefOpen', 'closeBracket', 'ahrefClose', 'spanOpen',    'spanClose', 'aCloseDownload'];
+        $partTags = [ '<BR>'  ,'<B>',        '</B>',     '<a href=',  '>',            '</a>',      '<span path=', '</span>',    'download>'];
+        $params = str_replace( $tagMarkers, $partTags, $params );
 
         $notes=Note::all();
-        return view('notes.index', compact('params','notes'));
+      //  return view('notes.index', compact('params','notes','tagMarkers','partTags'));
+       return view('notes.index', compact('params','notes'));
     }
     /**
      * Show the form for creating a new resource.
@@ -39,15 +51,16 @@ class NoteController extends Controller
      */
     public function store()
     {
-        $dir = new Dirs;
-        $params = $dir->loadNoteToDir("upl");
-        //   echo "<pre>", var_dump($params), "</pre>";
+        $uplName = config('parameters.uplName');
+        $uplPath = config('parameters.uplPath');
+
+        $dir = new DirUploadFileStructure;
+        $params = $dir->loadNoteToDir($uplName, $uplPath);
 
         if ( ( $params[0] !== null ) and ( $params[1] !== null ) ) {
             $directory_name = $params[0];
             $name = $params[1];
             Note::create(['directory_name' => $directory_name, 'name' => $name]);
-
             return redirect('notes');
         } else {
             return view('notes.nottxt', compact('params'));
@@ -62,7 +75,11 @@ class NoteController extends Controller
     public function show($id)
     {
         $note=Note::find($id);
-        return view('notes.show',compact('note'));
+
+        $uplName = config('parameters.uplName');
+        $contents = \File::get($uplName.'/'.$note->directory_name.'/'.$note->name);
+
+        return view('notes.show', compact('note','contents'));
     }
 
     /**
@@ -74,7 +91,11 @@ class NoteController extends Controller
     public function edit($id)
     {
         $note=Note::find($id);
-        return view('notes.edit',compact('note'));
+
+        $uplName = config('parameters.uplName');
+        $contents = \File::get($uplName.'/'.$note->directory_name.'/'.$note->name);
+
+        return view('notes.edit',compact('note','contents'));
     }
 
     /**
@@ -87,7 +108,9 @@ class NoteController extends Controller
     {
         $note=Note::find($id);
         $contents = $_POST['editor1'];
-        \File::put('upl/'.$note->directory_name.'/'.$note->name, $contents);
+
+        $uplName = config('parameters.uplName');
+        \File::put($uplName.'/'.$note->directory_name.'/'.$note->name, $contents);
         return redirect('notes');
     }
     /**
@@ -99,16 +122,16 @@ class NoteController extends Controller
     public function destroy($id)
     {
         $note=Note::find($id);
-        \File::delete('upl/'.$note->directory_name.'/'.$note->name);
+        $uplName = config('parameters.uplName');
+        \File::delete($uplName.'/'.$note->directory_name.'/'.$note->name);
 
-        $dir = new Dirs;
+        $dir = new DirUploadFileStructure;
+        $dirPath = $uplName.'/'.$note->directory_name;
 
-        $dirPath = 'upl/'.$note->directory_name;
-        if (is_dir($dirPath)){//if (file_exists($dirpath)){
-           if ($dir->count_files($dirPath) == 0) {
-                rmdir($dirPath);
-            }
+        if (is_dir($dirPath) && ($dir->countFiles($dirPath) == 0)){
+            rmdir($dirPath);
         }
+
         Note::find($id)->delete();
         return redirect('notes');
     }
