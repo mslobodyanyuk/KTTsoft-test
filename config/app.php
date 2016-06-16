@@ -150,7 +150,11 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         // ???
+<<<<<<< HEAD
 		//'Illuminate\Html\HtmlServiceProvider',
+=======
+        //'Illuminate\Html\HtmlServiceProvider',
+>>>>>>> 942b2fcfac9359ebcb4477f14858e1c44fe638d0
 
         //!!! bindShared() deprecated error
         Collective\Html\HtmlServiceProvider::class,
@@ -163,9 +167,9 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-		
 
-		
+
+
     ],
 
     /*
@@ -215,8 +219,13 @@ return [
         'Builder'   => Illuminate\Database\Query\Builder::class,
 
         ///???
+<<<<<<< HEAD
 		//'Form'     => 'Illuminate\Html\FormFacade',
 		//'Html'     => 'Illuminate\Html\HtmlFacade',
+=======
+        //'Form'     => 'Illuminate\Html\FormFacade',
+        //'Html'     => 'Illuminate\Html\HtmlFacade',
+>>>>>>> 942b2fcfac9359ebcb4477f14858e1c44fe638d0
 
         //!!! bindShared() deprecated error
         'Form'     => Collective\Html\FormFacade::class,
