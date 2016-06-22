@@ -152,7 +152,7 @@ class DirUploadFileStructure {
      *  loadNoteToDir creating file structure, create directories and load files in upload folder
      *  @return array $params['directory_name','name'];
      */
-    public function loadNoteToDir($dirUpl, $dirPath){
+    public function loadNoteToDir($dirUpl, $dirPath, $countContentFiles){
         if (is_uploaded_file($_FILES['uploadfile']['tmp_name'])) {
             $fileName = basename($_FILES['uploadfile']['name']);
             if($this->checkNotTxtExtension($fileName)) {
@@ -172,7 +172,8 @@ class DirUploadFileStructure {
                         $dirNum++;
                         if ($dirNum <= $countDirs) {
                             $initParams = $this->initUplParams($dirPath, $countDirs, $dirNum);
-                            if ($this->countFiles($initParams['dirPath']) < 2) {                                                            //<10
+                            //if ($this->countFiles($initParams['dirPath']) < 2) {                                                            //<10
+                            if ($this->countFiles($initParams['dirPath']) < $countContentFiles) {
                                 return $this->uplFile($initParams['dirName'], $initParams['dirPath'], $initParams['fileName'], $initParams['uploadFile']); // 2 uplFile()
                             } else {
                                     if ($dirNum == $countDirs) {

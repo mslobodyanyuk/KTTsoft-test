@@ -24,6 +24,5 @@
 |
 */
 
-Route::resource('/','NoteController');
-
-Route::resource('notes','NoteController');
+Route::resource('/', 'NoteController');
+Route::resource('notes', 'NoteController');

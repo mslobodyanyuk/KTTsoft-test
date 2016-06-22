@@ -53,9 +53,12 @@ class NoteController extends Controller
     {
         $uplName = config('parameters.uplName');
         $uplPath = config('parameters.uplPath');
+        $countContentFiles = config('parameters.countContentFiles');
 
         $dir = new DirUploadFileStructure;
-        $params = $dir->loadNoteToDir($uplName, $uplPath);
+
+        //$params = $dir->loadNoteToDir($uplName, $uplPath);
+        $params = $dir->loadNoteToDir($uplName, $uplPath, $countContentFiles );
 
         if ( ( $params[0] !== null ) and ( $params[1] !== null ) ) {
             $directory_name = $params[0];
