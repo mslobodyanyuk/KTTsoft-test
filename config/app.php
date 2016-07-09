@@ -156,6 +156,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
 
+
+
         /*
          * Application Service Providers...
          */
@@ -163,6 +165,10 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        //testing my service provider
+        //???   error: Container
+        // App\Providers\CheckStructureServiceProvider::class,
 
 
 
@@ -221,6 +227,19 @@ return [
         //!!! bindShared() deprecated error
         'Form'     => Collective\Html\FormFacade::class,
         'Html'     => Collective\Html\HtmlFacade::class,
+
+        // my
+        //'Code'          => \App\Code::class,
+        //FileStructure
+        'DirUploadFileStructure' => \App\src\FileStructure\DirUploadFileStructure::class,
+        //Path
+        'PathInterface' => \App\src\Path\PathInterface::class,
+        'UploadPath'    => \App\src\Path\UploadPath::class,
+        //Services
+       // 'PathInterface' => \App\src\Services\CheckStructureService::class,
+
+
+
     ],
 
 ];

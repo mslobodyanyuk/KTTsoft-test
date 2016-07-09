@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 use App\Note;
 use App\Http\Requests;
 use Request;
-use App\Http\DirUploadFileStructure;
-use App\Http\CheckStructureService;
+
+use App\src\FileStructure\DirUploadFileStructure;
+use App\src\Services\CheckStructureService;
+use App\src\Path\UploadPath;
+
 use Symfony\Component\HttpFoundation\File;
 class NoteController extends Controller
 {
@@ -16,9 +19,12 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $uplPath = config('parameters.uplPath');
-
+        $uplPath = new UploadPath();
         $check = new CheckStructureService($uplPath);
+        //$check = new CheckStructureService( new UploadPath() );
+
+                //$check = $this->app->make('CheckStructureService');  //!!!
+
         $check->init();
 
         $uplName = config('parameters.uplName');
@@ -56,8 +62,6 @@ class NoteController extends Controller
         $countContentFiles = config('parameters.countContentFiles');
 
         $dir = new DirUploadFileStructure;
-
-        //$params = $dir->loadNoteToDir($uplName, $uplPath);
         $params = $dir->loadNoteToDir($uplName, $uplPath, $countContentFiles );
 
         if ( ( $params[0] !== null ) and ( $params[1] !== null ) ) {

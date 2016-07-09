@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use Symfony\Component\HttpFoundation\File;
-use App\Http\CheckStructureService;
+use App\src\Services\CheckStructureService;
+use App\src\Path\UploadPath;
+
 class NotesTableSeeder extends Seeder
 {
     /**
@@ -12,24 +14,24 @@ class NotesTableSeeder extends Seeder
      */
     public function run()
     {
-        $uplPath = config('parameters.uplPath');
+        $uplPath = new UploadPath();
 
         $check = new CheckStructureService($uplPath);
         $check->init();
 
-        if (mkdir( $uplPath.'/1' , 0777 )) {
-            \File::put($uplPath.'/1/TEST1.txt', 'content TEST1.txt');
-            \File::put($uplPath.'/1/TEST2.txt', 'content TEST2.txt');
+        if (mkdir( $uplPath->getPath().'/1' , 0777 )) {
+            \File::put($uplPath->getPath().'/1/TEST1.txt', 'content TEST1.txt');
+            \File::put($uplPath->getPath().'/1/TEST2.txt', 'content TEST2.txt');
         }
 
-        if (mkdir( $uplPath.'/2' , 0777 )) {
-            \File::put($uplPath.'/2/TEST1.txt', 'content TEST1.txt');
-            \File::put($uplPath.'/2/TEST2.txt', 'content TEST2.txt');
+        if (mkdir( $uplPath->getPath().'/2' , 0777 )) {
+            \File::put($uplPath->getPath().'/2/TEST1.txt', 'content TEST1.txt');
+            \File::put($uplPath->getPath().'/2/TEST2.txt', 'content TEST2.txt');
         }
 
-        if (mkdir( $uplPath.'/3' , 0777 )) {
-            \File::put($uplPath.'/3/TEST1.txt', 'content TEST1.txt');
-            \File::put($uplPath.'/3/TEST2.txt', 'content TEST2.txt');
+        if (mkdir( $uplPath->getPath().'/3' , 0777 )) {
+            \File::put($uplPath->getPath().'/3/TEST1.txt', 'content TEST1.txt');
+            \File::put($uplPath->getPath().'/3/TEST2.txt', 'content TEST2.txt');
         }
 
         DB::table('notes')->insert(['name' => 'TEST1.txt', 'directory_name' => '1']);

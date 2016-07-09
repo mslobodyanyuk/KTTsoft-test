@@ -1,5 +1,7 @@
 <?php
-namespace App\Http;
+namespace App\src\Services;
+
+use App\src\Path\UploadPath;
 
 class CheckStructureService
 {
@@ -10,9 +12,14 @@ class CheckStructureService
      *
      * @param string $path
      */
-    public function __construct($path)
+    /*public function __construct($path)
     {
         $this->path = $path;
+    }
+*/
+    public function __construct(UploadPath $path)
+    {
+        $this->path = $path->getPath();
     }
 
     /**
@@ -38,6 +45,7 @@ class CheckStructureService
         if (!file_exists($this->path)) {
             $this->create($this->path);
         }
+
     }
 
     /**

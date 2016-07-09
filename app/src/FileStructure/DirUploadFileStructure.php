@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http;
+namespace App\src\FileStructure;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\File;
 
@@ -172,8 +172,7 @@ class DirUploadFileStructure {
                         $dirNum++;
                         if ($dirNum <= $countDirs) {
                             $initParams = $this->initUplParams($dirPath, $countDirs, $dirNum);
-                            //if ($this->countFiles($initParams['dirPath']) < 2) {                                                            //<10
-                            if ($this->countFiles($initParams['dirPath']) < $countContentFiles) {
+                            if ($this->countFiles($initParams['dirPath']) < $countContentFiles) {   //$countContentFiles < 2                // <10
                                 return $this->uplFile($initParams['dirName'], $initParams['dirPath'], $initParams['fileName'], $initParams['uploadFile']); // 2 uplFile()
                             } else {
                                     if ($dirNum == $countDirs) {
