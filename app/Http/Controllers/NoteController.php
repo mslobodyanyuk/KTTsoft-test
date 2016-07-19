@@ -21,9 +21,8 @@ class NoteController extends Controller
     {
         $uplPath = new UploadPath();
         $check = new CheckStructureService($uplPath);
-        //$check = new CheckStructureService( new UploadPath() );
 
-                //$check = $this->app->make('CheckStructureService');  //!!!
+            //$check = $this->app->make('CheckStructureService');  //!!!
 
         $check->init();
 
@@ -37,7 +36,7 @@ class NoteController extends Controller
         $params = str_replace( $tagMarkers, $partTags, $params );
 
         $notes=Note::all();
-      //  return view('notes.index', compact('params','notes','tagMarkers','partTags'));
+
        return view('notes.index', compact('params','notes'));
     }
     /**
@@ -114,10 +113,12 @@ class NoteController extends Controller
     public function update($id)
     {
         $note=Note::find($id);
-        $contents = $_POST['editor1'];
+        //$contents = $_POST['editor1'];
+        //$editorContent = config('parameters.editorContent');
+        $editorContent = config('parameters.editorContent');
 
         $uplName = config('parameters.uplName');
-        \File::put($uplName.'/'.$note->directory_name.'/'.$note->name, $contents);
+        \File::put($uplName.'/'.$note->directory_name.'/'.$note->name, $editorContent);
         return redirect('notes');
     }
     /**

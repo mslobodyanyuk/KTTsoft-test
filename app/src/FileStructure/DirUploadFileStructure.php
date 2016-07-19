@@ -10,6 +10,28 @@ class DirUploadFileStructure {
      *  getDirContent put content file-structure containing in upload folder($dir) into array $content
      *  @return array $content
      */
+/*    public function getDirContent($dir,$offs,&$content){
+        if ($d=opendir($dir)) {
+            while ($file=readdir($d)) {
+                if (($file=='.') or ($file=='..')) {
+                    continue;
+                }
+                if (is_dir($dir."/".$file)) {
+                    $content[] = "brake  $offs  boldOpen $dir/$file  boldClose";
+                    $this->getDirContent($dir."/".$file, $offs."-",$content);
+                } else {
+                    $content[] = "ahrefOpen /$dir/$file  closeBracket  brake  $offs $dir/$file  ahrefClose   || spanOpen /$dir/$file>$dir/$file  spanClose || ahrefOpen /$dir/$file aCloseDownload Download ahrefClose ||";
+                }
+            }
+        }
+        closedir($d);
+        if (empty($content)){
+            $content['message'] = '- folder is empty!!!';
+        }
+        return($content);
+    }
+*/
+
     public function getDirContent($dir,$offs,&$content){
         if ($d=opendir($dir)) {
             while ($file=readdir($d)) {
