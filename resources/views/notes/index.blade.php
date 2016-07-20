@@ -15,20 +15,17 @@
             <label><h1>Tree structure content folder "upl/:"</h1></label>
         </div>
 
-        @if (! empty($params['message']))
-            <h1 class='text-center'><i style='color:orange'>{!!$params['message']!!}</i></h1>
+        @if (empty($params))
+            <h1 class='text-center'><i style='color:orange'> - folder is empty!!! </i></h1>
         @else
-
             @foreach ($params as $param)
-                {!! $param !!}
-
-    {{--{!!
-    $param = str_replace( $tagMarkers, $partTags, $param );
-
-    !!}--}}
-@endforeach
-@endif
-
+                @if ('FILE' == $param['type'])
+                    <a href={{ '/'.$param['parentFolderName'].'/'.$param["nodeName"] }}><BR> - {{ $param['parentFolderName'].'/'.$param['nodeName'] }}</a> || <span path= {{ '/'.$param['parentFolderName'].'/'.$param["nodeName"] }} > {{ $param['parentFolderName'].'/'.$param['nodeName'] }}</span> || <a href={{ '/'.$param['parentFolderName'].'/'.$param["nodeName"] }} download>   Download</a> ||
+                @else
+                    <BR><B>{{ $param['parentFolderName'].'/'.$param['nodeName'] }}</B>
+                @endif
+            @endforeach
+        @endif
 <div class="form-group">
 <label for="editor1"><h1>File contents:</h1></label>
 <textarea class="form-control" rows="5" placeholder="Note text:" name="editor1" cols="50" id="editor1" readonly></textarea>

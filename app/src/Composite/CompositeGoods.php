@@ -1,5 +1,5 @@
 <?php
-namespace src\Composite;
+namespace App\src\Composite;
 
 /* 
  * класс Composite (Компоновщик),компоновщик(по айди выстраивает ветки(children,дети))

@@ -1,5 +1,5 @@
 <?php
-namespace src\Iterator; 
+namespace App\src\Iterator;
 interface IteratorInterface
 {
   /**

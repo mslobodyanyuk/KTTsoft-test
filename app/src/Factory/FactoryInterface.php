@@ -1,5 +1,5 @@
 <?php
-namespace src\Factory;
+namespace App\src\Factory;
 
 interface FactoryInterface{							
     public function create(array $params); 

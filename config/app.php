@@ -228,15 +228,31 @@ return [
         'Form'     => Collective\Html\FormFacade::class,
         'Html'     => Collective\Html\HtmlFacade::class,
 
-        // my
+
+        // my classes
         //'Code'          => \App\Code::class,
+
+    //src
+        //Composite
+            'CompositeGoods' => \App\src\Composite\CompositeGoods::class,
+            'NodeInterface' => \App\src\Composite\NodeInterface::class,
+            'RootCompositeGoods' => \App\src\Composite\RootCompositeGoods::class,
+        //Factory
+            'FactoryInterface' => \App\src\Factory\FactoryInterface::class,
+            'GoodsFactory'    => \App\src\Factory\GoodsFactory::class,
         //FileStructure
-        'DirUploadFileStructure' => \App\src\FileStructure\DirUploadFileStructure::class,
+            'DirUploadFileStructure' => \App\src\FileStructure\DirUploadFileStructure::class,
+        //Iterator
+            'IteratorGoods' => \App\src\Iterator\IteratorGoods::class,
+            'IteratorInterface' => \App\src\Iterator\IteratorInterface::class,
         //Path
-        'PathInterface' => \App\src\Path\PathInterface::class,
-        'UploadPath'    => \App\src\Path\UploadPath::class,
+            'PathInterface' => \App\src\Path\PathInterface::class,
+            'UploadPath'    => \App\src\Path\UploadPath::class,
         //Services
-       // 'PathInterface' => \App\src\Services\CheckStructureService::class,
+            'CheckStructureService' => \App\src\Services\CheckStructureService::class,
+
+
+
 
 
 

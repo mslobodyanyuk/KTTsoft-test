@@ -1,7 +1,7 @@
 <?php
 
-namespace src\Composite;
-use src\Iterator as I; 
+namespace App\src\Composite;
+use App\src\Iterator as I;
 
 /*
  * класс RootCompositeGoods. Этот класс в себе должен содержать итератор.

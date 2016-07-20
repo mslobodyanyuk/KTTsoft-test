@@ -1,5 +1,5 @@
 <?php
-namespace src\Composite;
+namespace App\src\Composite;
 
 interface NodeInterface{	
 	public function getId();

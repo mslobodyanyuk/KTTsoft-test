@@ -1,8 +1,8 @@
 <?php
-namespace src\Factory; 
+namespace App\src\Factory;
 
-use src\Composite as C;
-use src\Iterator as I;
+use App\src\Composite as C;
+use App\src\Iterator as I;
 
 /*
  * Factory создает элементы Cоmposite. Фабрика создает ноды(ветки), по одной.
@@ -13,7 +13,7 @@ class GoodsFactory implements FactoryInterface{
 	 * метод create(array $params) создаёт композит. $params - это данные из файла, строки.
 	 */
 	public function create(array $params) {
-		return new C\CompositeGoods($params['nodeId'],$params['nodeName']);  
+		return new C\CompositeGoods($params['nodeId'],$params['nodeName']);
 	}
 	
 	/*

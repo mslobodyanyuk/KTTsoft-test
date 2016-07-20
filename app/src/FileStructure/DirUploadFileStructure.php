@@ -31,25 +31,37 @@ class DirUploadFileStructure {
         return($content);
     }
 */
-
-    public function getDirContent($dir,$offs,&$content){
+    public function getDirContent($dir,&$content){
         if ($d=opendir($dir)) {
+
             while ($file=readdir($d)) {
+                static  $cnt = 0;
+
                 if (($file=='.') or ($file=='..')) {
                     continue;
                 }
+
                 if (is_dir($dir."/".$file)) {
-                    $content[] = "brake  $offs  boldOpen $dir/$file  boldClose";
-                    $this->getDirContent($dir."/".$file, $offs."-",$content);
+                    $cnt = $cnt++;
+                    $nodeData["nodeId"] = $cnt;
+                    $nodeData["parentId"] = 0;
+                    $nodeData["type"] = 'DIR';
+                    $nodeData["parentFolderName"] = $dir;
+                    $nodeData["nodeName"] = $file;
+                    $content[] = $nodeData;
+                    $this->getDirContent($dir."/".$file,$content);
                 } else {
-                    $content[] = "ahrefOpen /$dir/$file  closeBracket  brake  $offs $dir/$file  ahrefClose   || spanOpen /$dir/$file>$dir/$file  spanClose || ahrefOpen /$dir/$file aCloseDownload Download ahrefClose ||";
+                    $cnt = $cnt++;
+                    $nodeData["nodeId"] = $cnt;
+                    $nodeData["parentId"] = $dir;
+                    $nodeData["type"] = 'FILE';
+                    $nodeData["parentFolderName"] = $dir;
+                    $nodeData["nodeName"] = $file;
+                    $content[] = $nodeData;
                 }
             }
         }
         closedir($d);
-        if (empty($content)){
-            $content['message'] = '- folder is empty!!!';
-        }
         return($content);
     }
 

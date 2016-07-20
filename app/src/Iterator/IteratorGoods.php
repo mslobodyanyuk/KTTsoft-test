@@ -1,5 +1,5 @@
 <?php
-namespace src\Iterator;
+namespace App\src\Iterator;
 /*
  * Итератор -класс абстрагирующий за единым интерфейсом доступ к элементам коллекции.
  */
