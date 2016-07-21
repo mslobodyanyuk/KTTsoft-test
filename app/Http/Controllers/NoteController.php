@@ -32,51 +32,34 @@ class NoteController extends Controller
 
         $dir = new DirUploadFileStructure;
 
-        $dataArray = $dir->getDirContent($uplName, $content);
-
-
-                echo "<pre>", var_dump($dataArray) ,"</pre>";
+        $params = $dataArray = $dir->getDirContent($uplName, "", $content);
+//echo "<pre> dataArray =", var_dump($dataArray) ,"</pre>";
 
         /***********Create a tree structure******************************/
         $factory = new F\GoodsFactory();
-            // Sort the array with the data so that the root was the first branch.
-       /* usort($dataArray, create_function('$a,$b','if ($a["parentFolderName"]===$b["parentFolderName"]) return 0;
-                 return $a["parentFolderName"]>$b["parentFolderName"] ? 1 : -1;'));
-       /* usort($dataArray, create_function('$a,$b','if ($a["type"]===$b["type"]) return 0;
-                 return $a["type"] > $b["type"] ? 1 : -1;'));*/
-
-        /*usort($dataArray, create_function('$a,$b','if ($a["parentId"]===$b["parentId"]) return 0;
-	     return (int)$a["parentId"] > (int)$b["parentId"] ? 1 : -1;'));
-        */
-       /* usort($dataArray, create_function('$a,$b','if ((int)$a["type"]===(int)$b["type"]) return 0;
-	     return (int)$a["type"]<(int)$b["type"] ? 1 : -1;'));*/
-
-                echo "<pre>", var_dump($dataArray) ,"</pre>";
             // To create the main node through the factory.
         $root = $factory->createRoot(array('nodeId'=>0, 'nodeName'=>'root'));
             // Gathering wood
         if (!empty($dataArray)) {
+            // Sort the array with the data so that the branches was the first.
+            usort($dataArray, create_function('$a,$b','if ((int)$a["parentId"]===(int)$b["parentId"]) return (int)$a["nodeId"]>(int)$b["nodeId"] ? 1 : -1;
+	        return (int)$a["parentId"]>(int)$b["parentId"] ? 1 : -1;'));
+echo "<pre> Sorted dataArray = ", print_r($dataArray) ,"</pre>";
             foreach ($dataArray as $data) {
                 $iterator = $root->getIterator();
                 $iterator->seek($data['parentId']);
-                //$iterator->seek($data['parentFolderName']);
                 $parent = $iterator->current();
                 $item = $factory->create($data);
                 $parent->addChild($item);
             }
         }
-         $tree = $root->getDataToPrint();
-                echo "<pre> tree = ", print_r($tree) ,"</pre>";
+        $tree = $root->getDataToPrint();
+echo "<pre> tree = ", print_r($tree) ,"</pre>";
         /***********Create a tree structure*****************************/
-
-
-        $params = $dataArray;
-
-
 
         $notes=Note::all();
 
-       return view('notes.index', compact('params','notes'));
+        return view('notes.index', compact('params','notes'));
     }
     /**
      * Show the form for creating a new resource.
@@ -101,7 +84,7 @@ class NoteController extends Controller
 
         $dir = new DirUploadFileStructure;
         $params = $dir->loadNoteToDir($uplName, $uplPath, $countContentFiles );
-
+echo "<pre> params = ", print_r($params) ,"</pre>";
         if ( ( $params[0] !== null ) and ( $params[1] !== null ) ) {
             $directory_name = $params[0];
             $name = $params[1];

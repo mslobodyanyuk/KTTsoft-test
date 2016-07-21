@@ -1,8 +1,8 @@
 <?php
 namespace App\src\Iterator;
 /*
- * Итератор -класс абстрагирующий за единым интерфейсом доступ к элементам коллекции.
- */
+ * Iterator class of abstracts for a single interface access to a collection.
+ */
 class IteratorGoods implements IteratorInterFace{
     /**
      * @var NodeInterface
@@ -24,19 +24,18 @@ class IteratorGoods implements IteratorInterFace{
      * @param integer         $index
      *
      * @return null|NodeInterface
-     */  
+     */
     private function find(array $children, $index)
     {
         foreach ($children as $childNode) {
-            if ((int)$childNode->getId() == $index) {// !!! (int)
+            if ($childNode->getId() == $index) {
                 return $childNode;
-            }			
+            }
             $node = $this->find($childNode->getChildren(), $index);
             if ($node) {
                 return $node;
             }
         }
-        
         return null;
     }
 
@@ -44,18 +43,17 @@ class IteratorGoods implements IteratorInterFace{
      * @param $index
      *
      */
-    public function seek($index){       
-		if ((int)$this->root->getId() == $index){// !!! (int) 
-			$this->current = $this->root;
-			return;
-		}
-				
-		$node = $this->find($this->root->getChildren(), $index);
-        if (!$node) {							
-		   echo "Can't find element ".$index;
+
+    public function seek($index){
+        if ($this->root->getId() == $index){
+            $this->current = $this->root;
+            return;
         }
-        $this->current = $node;		
-				
+        $node = $this->find($this->root->getChildren(), $index);
+        if (!$node) {
+            echo "Can't find element ".$index;
+        }
+        $this->current = $node;
     }
 
     /**
@@ -64,7 +62,9 @@ class IteratorGoods implements IteratorInterFace{
     public function current(){
         return $this->current;
     }
-
+    /**
+     * go to next NodeInterface
+     */
     public function next(){
         $index = $this->current->getId() + 1;
         $node = $this->find($this->root->getChildren(), $index);

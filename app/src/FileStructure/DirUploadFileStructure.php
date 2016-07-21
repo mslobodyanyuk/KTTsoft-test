@@ -10,50 +10,29 @@ class DirUploadFileStructure {
      *  getDirContent put content file-structure containing in upload folder($dir) into array $content
      *  @return array $content
      */
-/*    public function getDirContent($dir,$offs,&$content){
-        if ($d=opendir($dir)) {
-            while ($file=readdir($d)) {
-                if (($file=='.') or ($file=='..')) {
-                    continue;
-                }
-                if (is_dir($dir."/".$file)) {
-                    $content[] = "brake  $offs  boldOpen $dir/$file  boldClose";
-                    $this->getDirContent($dir."/".$file, $offs."-",$content);
-                } else {
-                    $content[] = "ahrefOpen /$dir/$file  closeBracket  brake  $offs $dir/$file  ahrefClose   || spanOpen /$dir/$file>$dir/$file  spanClose || ahrefOpen /$dir/$file aCloseDownload Download ahrefClose ||";
-                }
-            }
-        }
-        closedir($d);
-        if (empty($content)){
-            $content['message'] = '- folder is empty!!!';
-        }
-        return($content);
-    }
-*/
-    public function getDirContent($dir,&$content){
+    public function getDirContent($dir, $forFileParentId, &$content){
+        static $nodeNum = 0;
         if ($d=opendir($dir)) {
 
             while ($file=readdir($d)) {
-                static  $cnt = 0;
-
                 if (($file=='.') or ($file=='..')) {
                     continue;
                 }
 
                 if (is_dir($dir."/".$file)) {
-                    $cnt = $cnt++;
-                    $nodeData["nodeId"] = $cnt;
+                    $nodeData["nodeId"] = ++$nodeNum;
                     $nodeData["parentId"] = 0;
                     $nodeData["type"] = 'DIR';
                     $nodeData["parentFolderName"] = $dir;
                     $nodeData["nodeName"] = $file;
                     $content[] = $nodeData;
-                    $this->getDirContent($dir."/".$file,$content);
+
+                    $forFileParentId = $nodeData["nodeId"];
+                    $this->getDirContent($dir."/".$file, $forFileParentId ,$content);
+
                 } else {
-                    $cnt = $cnt++;
-                    $nodeData["nodeId"] = $cnt;
-                    $nodeData["parentId"] = $dir;
+                    $nodeData["nodeId"] = ++$nodeNum;
+                    $nodeData["parentId"] = $forFileParentId;
                     $nodeData["type"] = 'FILE';
                     $nodeData["parentFolderName"] = $dir;
                     $nodeData["nodeName"] = $file;
@@ -112,9 +91,12 @@ class DirUploadFileStructure {
         else {
             $dirName = $dirNum;
         }
+
         $initParams['dirName'] = $dirName;
         $initParams['dirPath'] = $uplPath . "/" . $dirName;
-        $initParams['fileName'] = basename($_FILES['uploadfile']['name']);
+
+        $uplNamePath = config('parameters.uplNamePath');
+        $initParams['fileName'] = basename($uplNamePath);
         $initParams['uploadFile'] = $initParams['dirPath'] . "/" . $initParams['fileName'];
         return $initParams;
     }
@@ -140,7 +122,8 @@ class DirUploadFileStructure {
             $fileName = str_ireplace('.', '_(2).', $fileName);
             $uploadFile = $dirPath . "/" . $fileName;
         }
-		if(copy($_FILES['uploadfile']['tmp_name'], $uploadFile)) {
+        $uplTempNamePath = config('parameters.uplTempNamePath');
+		if(copy($uplTempNamePath, $uploadFile)) {
             $params[] = $dirName;
             $params[] = $fileName;
 		}
@@ -187,8 +170,24 @@ class DirUploadFileStructure {
      *  @return array $params['directory_name','name'];
      */
     public function loadNoteToDir($dirUpl, $dirPath, $countContentFiles){
-        if (is_uploaded_file($_FILES['uploadfile']['tmp_name'])) {
-            $fileName = basename($_FILES['uploadfile']['name']);
+        $uplTempNamePath = config('parameters.uplTempNamePath');
+        $uplNamePath = config('parameters.uplNamePath');
+
+
+echo "<pre> uplTempNamePath =", var_dump($uplTempNamePath) ,"</pre>";
+echo "<pre> uplNamePath =", var_dump($uplNamePath) ,"</pre>";
+
+
+
+        if (is_uploaded_file($uplTempNamePath)) {
+        //if (is_uploaded_file($_FILES['uploadfile']['tmp_name'])) {
+
+            $fileName = basename($uplNamePath);
+            //$fileName = basename($_FILES['uploadfile']['name']);
+
+echo "<pre>!!!uplTempNamePath =", var_dump($uplTempNamePath) ,"</pre>";
+echo "<pre> fileName =", var_dump($fileName) ,"</pre>";
+
             if($this->checkNotTxtExtension($fileName)) {
                 return $this->checkNotTxtExtension($fileName);
             }
