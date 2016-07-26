@@ -89,7 +89,7 @@ echo "<pre> tree = ", print_r($tree) ,"</pre>";
 
         $pathName = Request::file('uploadfile')->getRealPath();
 //echo "<pre> pathName = ", var_dump($pathName) ,"</pre>";
-        $fileExtension = Request::file('uploadfile')->guessClientExtension();
+        $fileExtension = Request::file('uploadfile')->getClientOriginalExtension();
 //echo "<pre> fileExtension = ", var_dump($fileExtension) ,"</pre>";
         $originalFileName = Request::file('uploadfile')->getClientOriginalName();   // $_FILES["uploadfile"]["name"];
 //echo "<pre> originalFileName = ", var_dump($originalFileName) ,"</pre>";
