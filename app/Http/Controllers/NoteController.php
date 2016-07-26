@@ -82,9 +82,23 @@ echo "<pre> tree = ", print_r($tree) ,"</pre>";
         $uplPath = config('parameters.uplPath');
         $countContentFiles = config('parameters.countContentFiles');
 
+//        $Request = Request::file('uploadfile');
+//echo "<pre> Request = ", var_dump($Request) ,"</pre>";
+
+/**********обьявление дополнительных переменных-параметров( "$_" ) через Request для передачи в loadNoteToDir();***********/
+
+        $pathName = Request::file('uploadfile')->getRealPath();
+//echo "<pre> pathName = ", var_dump($pathName) ,"</pre>";
+        $fileExtension = Request::file('uploadfile')->guessClientExtension();
+//echo "<pre> fileExtension = ", var_dump($fileExtension) ,"</pre>";
+        $originalFileName = Request::file('uploadfile')->getClientOriginalName();   // $_FILES["uploadfile"]["name"];
+//echo "<pre> originalFileName = ", var_dump($originalFileName) ,"</pre>";
+
+/**********обьявление дополнительных переменных-параметров( "$_" ) через Request для передачи в loadNoteToDir();***********/
+
         $dir = new DirUploadFileStructure;
-        $params = $dir->loadNoteToDir($uplName, $uplPath, $countContentFiles );
-echo "<pre> params = ", print_r($params) ,"</pre>";
+        $params = $dir->loadNoteToDir($uplName, $uplPath, $countContentFiles, $pathName, $originalFileName,  $fileExtension);
+//echo "<pre> params = ", print_r($params) ,"</pre>";
         if ( ( $params[0] !== null ) and ( $params[1] !== null ) ) {
             $directory_name = $params[0];
             $name = $params[1];
@@ -93,6 +107,7 @@ echo "<pre> params = ", print_r($params) ,"</pre>";
         } else {
             return view('notes.nottxt', compact('params'));
         }
+
     }
     /**
      * Display the specified resource.
@@ -136,8 +151,9 @@ echo "<pre> params = ", print_r($params) ,"</pre>";
     {
         $note=Note::find($id);
 
-        $editorContent = config('parameters.editorContent');
         $uplName = config('parameters.uplName');
+        $editorContent = Request::input('editor1');
+
         \File::put($uplName.'/'.$note->directory_name.'/'.$note->name, $editorContent);
         return redirect('notes');
     }
