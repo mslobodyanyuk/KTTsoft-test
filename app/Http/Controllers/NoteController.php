@@ -12,6 +12,9 @@ use App\src\Path\UploadPath;
 use App\src\Factory as F;
 
 use Symfony\Component\HttpFoundation\File;
+
+use Illuminate\Container as Container;
+
 class NoteController extends Controller
 {
     /**
@@ -21,12 +24,20 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $uplPath = new UploadPath();
-        $check = new CheckStructureService($uplPath);
+       // $uplPath = new UploadPath();
+       // $check = new CheckStructureService($uplPath);
+       // $check->init();
+       // // $check = $this->app->make('CheckStructureService');  //!!!   ErrorException in NoteController.php line 27: Undefined property: App\Http\Controllers\NoteController::$app
 
-            //$check = $this->app->make('CheckStructureService');  //!!!
 
+//**********************using container object ( ?use it also in fixture? )******************************/
+        $app = new Container\Container();
+        $check = $app->make('CheckStructureService');
         $check->init();
+//**********************using container object ( ?use it also in fixture? )******************************/
+
+
+
 
         $uplName = config('parameters.uplName');
 

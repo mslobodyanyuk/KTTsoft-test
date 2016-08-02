@@ -13,7 +13,7 @@ class CheckStructureServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('CheckStructureService');
+     //   $this->app->make('CheckStructureService');
     }
 
 }
