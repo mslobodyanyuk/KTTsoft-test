@@ -168,7 +168,7 @@ return [
 
         //testing my service provider
         //???   error: Container
-        // App\Providers\CheckStructureServiceProvider::class,
+         App\Providers\CheckStructureServiceProvider::class,
 
 
 

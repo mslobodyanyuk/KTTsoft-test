@@ -53,17 +53,6 @@ class DirUploadFileStructure {
      *  @return array $params
      */
     public function checkNotTxtExtension($fileName, $fileExtension){
-       /*
-        $info = new SplFileInfo($fileName, '', '');
-        if ($info->getExtension() !== 'txt') {
-            $params[0] = null;
-            $params[1] = null;
-            $params['message'] = "  -  We can use only txt-extension files($fileName)";
-            return $params;
-        }else {
-            return false;
-        }
-       */
         if ( 'txt' !== $fileExtension ) {
             $params[0] = null;
             $params[1] = null;
@@ -98,16 +87,9 @@ class DirUploadFileStructure {
      *  initUplParams init params to upload files
      *  @return array $initParams['dirName','dirPath','fileName','uploadFile'];
      */
-    public function initUplParams($uplPath, $countDirs, $dirNum, $pathName, $originalFileName){
-        if ($countDirs == 0) {
-            $dirName = '1';
-        }
-        else {
-            $dirName = $dirNum;
-        }
-
-        $initParams['dirName'] = $dirName;
-        $initParams['dirPath'] = $uplPath . "/" . $dirName;
+    public function initUplParams($uplPath, $dirNum, $pathName, $originalFileName){
+        $initParams['dirName'] = $dirNum;
+        $initParams['dirPath'] = $uplPath . "/" . $dirNum;
         $initParams['fileName'] = $originalFileName;
         $initParams['pathName'] = $pathName;
         $initParams['uploadFile'] = $initParams['dirPath'] . "/" . $initParams['fileName'];
@@ -172,10 +154,31 @@ class DirUploadFileStructure {
      *  uplFile upload file into appropriate folder
      *  @return array $params[$dirName, $fileName];
      */
-    public function createInitDirUplFile($dirPath, $countDirs, $dirNum, $pathName, $originalFileName){
-        $initParams = $this->initUplParams($dirPath, $countDirs, $dirNum, $pathName, $originalFileName);
+
+    public function createInitDirUplFile($dirPath, $dirNum, $pathName, $originalFileName){
+        $dirNum++;
+        $initParams = $this->initUplParams($dirPath, $dirNum, $pathName, $originalFileName);
         $this->makeDir($initParams['dirPath']);
         return $this->uplFile($initParams['dirName'], $initParams['dirPath'], $initParams['fileName'], $initParams['pathName'] , $initParams['uploadFile']);
+    }
+
+    /**
+     * @param $dirPath
+     * @param $countContentFiles
+     * @return bool
+     */
+    public function isNotFilledDir($dirPath, $countContentFiles){
+        return ($this->countFiles($dirPath) < $countContentFiles);
+    }
+
+    /**
+     * @param $dirNum
+     * @param $countDirs
+     * @return bool
+     * where $dirUpl is empty ($countDirs == 0) or existing dirs filled of files
+     */
+    public function isNeedCreateNewUploadFolder($dirNum, $countDirs){
+        return ($dirNum == $countDirs);
     }
 
     /**
@@ -183,38 +186,36 @@ class DirUploadFileStructure {
      *  @return array $params['directory_name','name'];
      */
     public function loadNoteToDir($dirUpl, $dirPath, $countContentFiles, $pathName, $originalFileName, $fileExtension){
-        if (is_uploaded_file($pathName)) {  // $_FILES["uploadfile"]['tmp_name'] is_uploaded_file - * Moves an uploaded file to a new location
+        if (is_uploaded_file($pathName)) {// $_FILES["uploadfile"]['tmp_name'] is_uploaded_file - * Moves an uploaded file to a new location
             if($this->checkNotTxtExtension($originalFileName, $fileExtension)) {
                 return $this->checkNotTxtExtension($originalFileName, $fileExtension);
             }
+
             if ($d=opendir($dirUpl)){
                 $dirNum = 0;
                 $countDirs = $this->countDirs($dirUpl);
-                if ($countDirs == 0){
-                    return $this->createInitDirUplFile($dirPath, $countDirs, $dirNum, $pathName, $originalFileName);                                                      // 1 makeDir() // 1 uplFile()
+                if ($this->isNeedCreateNewUploadFolder($dirNum, $countDirs)){
+                    return $this->createInitDirUplFile($dirPath, $dirNum, $pathName, $originalFileName);                // 1 makeDir() // 1 uplFile()
                 }
+
                 while ($file=readdir($d)) {
                     if (($file=='.') or ($file=='..')) {
                         continue;
                     }
                     if (is_dir($dirUpl."/".$file)) {
                         $dirNum++;
-                        if ($dirNum <= $countDirs) {
-                            $initParams = $this->initUplParams($dirPath, $countDirs, $dirNum, $pathName, $originalFileName);
-                            if ($this->countFiles($initParams['dirPath']) < $countContentFiles) {   //$countContentFiles < 2                // <10
-                                return $this->uplFile($initParams['dirName'], $initParams['dirPath'], $initParams['fileName'], $initParams['pathName'], $initParams['uploadFile']); // 2 uplFile()
-                            } else {
-                                    if ($dirNum == $countDirs) {
-                                        $dirNum++;
-                                        return $this->createInitDirUplFile($dirPath, $countDirs, $dirNum, $pathName, $originalFileName);                                  // 2 makeDir() // 3 uplFile()
-                                    } else {
-                                                continue;
-                                    }
-                            }
-                        }//if ($dirNum <= $countDirs)
+                        $initParams = $this->initUplParams($dirPath, $dirNum, $pathName, $originalFileName);
+                        if ($this->isNotFilledDir($initParams['dirPath'], $countContentFiles)) {                        // $countContentFiles < 2 // <10
+                            return $this->uplFile($initParams['dirName'], $initParams['dirPath'], $initParams['fileName'], $initParams['pathName'], $initParams['uploadFile']); // 2 uplFile()
+                        }
+                        if ($this->isNeedCreateNewUploadFolder($dirNum, $countDirs)) {// FilledDir!!!
+                            return $this->createInitDirUplFile($dirPath, $dirNum, $pathName, $originalFileName);        // 2 makeDir() // 3 uplFile()
+                        }
                     }//is_dir
                 }// while ($file=readdir($d)) {
+
             }// if ($d=opendir($dir)) {
+
         }//if (is_uploaded_file
     }
 

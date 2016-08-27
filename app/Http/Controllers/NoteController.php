@@ -29,11 +29,16 @@ class NoteController extends Controller
        // $check->init();
        // // $check = $this->app->make('CheckStructureService');  //!!!   ErrorException in NoteController.php line 27: Undefined property: App\Http\Controllers\NoteController::$app
 
-
 //**********************using container object ( ?use it also in fixture? )******************************/
-        $app = new Container\Container();
+       /* $app = new Container\Container();
         $check = $app->make('CheckStructureService');
         $check->init();
+        */
+
+        //or
+        $check = \App::make('CheckStructureService');
+        $check->init();
+
 //**********************using container object ( ?use it also in fixture? )******************************/
 
 
