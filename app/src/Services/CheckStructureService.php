@@ -12,11 +12,6 @@ class CheckStructureService
      *
      * @param string $path
      */
-    /*public function __construct($path)
-    {
-        $this->path = $path;
-    }
-*/
     public function __construct(UploadPath $path)
     {
         $this->path = $path->getPath();

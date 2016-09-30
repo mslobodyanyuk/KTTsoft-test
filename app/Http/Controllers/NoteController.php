@@ -4,15 +4,9 @@ namespace App\Http\Controllers;
 use App\Note;
 use App\Http\Requests;
 use Request;
-
 use App\src\FileStructure\DirUploadFileStructure;
-use App\src\Services\CheckStructureService;
-use App\src\Path\UploadPath;
-
 use App\src\Factory as F;
-
 use Symfony\Component\HttpFoundation\File;
-
 use Illuminate\Container as Container;
 
 class NoteController extends Controller
@@ -24,25 +18,11 @@ class NoteController extends Controller
      */
     public function index()
     {
-       // $uplPath = new UploadPath();
-       // $check = new CheckStructureService($uplPath);
-       // $check->init();
-       // // $check = $this->app->make('CheckStructureService');  //!!!   ErrorException in NoteController.php line 27: Undefined property: App\Http\Controllers\NoteController::$app
 
-//**********************using container object ( ?use it also in fixture? )******************************/
-       /* $app = new Container\Container();
-        $check = $app->make('CheckStructureService');
-        $check->init();
-        */
-
-        //or
+    //*********using container object ( also in seeds(fixture) )***********/
         $check = \App::make('CheckStructureService');
         $check->init();
-
-//**********************using container object ( ?use it also in fixture? )******************************/
-
-
-
+    //*********using container object ( also in seeds(fixture) )***********/
 
         $uplName = config('parameters.uplName');
 
