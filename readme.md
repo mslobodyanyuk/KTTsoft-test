@@ -1,27 +1,30 @@
-## Laravel PHP Framework
+Задача
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Разработать веб приложение для загрузки файлов в папку с визуализацией структуры файлов на отдельной странице
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Приложение состоит из 2х разделов
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+CRUD редактор файлов (бекенд)
+страница вывода результирующей структуры файлов (фронтенд)
 
-## Official Documentation
+Замечания
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+каждый загруженный файл должен физически попаcть в папку
+в одной папке должно быть не больше 10 файлов и имена должны быть уникальны
 
-## Contributing
+авторизация, логин не обязательны
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+визуальный интерфейс и выбор фреймворкабиблиотек оставляется на усмотрение программиста
 
-## Security Vulnerabilities
+БД должна содержать точную копию структуры файлов в папке, и меняться вместе с добавлениемудалением файлов
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+по нажатию на имя файла (фронтенд) можно увидетьскачать файл
+загружаются только текстовые файлы
 
-### License
+СУБД MySQL
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+категория _
+- файл1-1
+- файл1-2
+- файл1
+- файл2 _
