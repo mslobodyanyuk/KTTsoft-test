@@ -12,7 +12,7 @@ page output the resulting file structure (frontend)
 ---
 Each uploaded file must be physically popact a folder
 in the same folder should be no more than 10 files, the names must be unique
-![screenshot of tree-structure](https://github.com/mslobodyanyuk/KTTsoft-test/tree/master/images/imageTree.png)
+![screenshot of tree-structure](https://github.com/mslobodyanyuk/KTTsoft-test/master/images/imageTree.png)
 
 ---
 authorization, the login is not required
@@ -20,10 +20,10 @@ authorization, the login is not required
 visual interface and a choice of framework / libraries is left to the discretion of the programmer
 
 The database must contain an exact copy of the files in a folder structure, and change with the addition / deletion of files
-![screenshot of table files](https://github.com/mslobodyanyuk/KTTsoft-test/tree/master/images/imageTable.png)
+![screenshot of table files](https://github.com/mslobodyanyuk/KTTsoft-test/master/images/imageTable.png)
 
 by clicking on the file name `(frontend)` you can see / download
-![screenshot of file contents](https://github.com/mslobodyanyuk/KTTsoft-test/tree/master/images/imageFileContents.png)
+![screenshot of file contents](https://github.com/mslobodyanyuk/KTTsoft-test/master/images/imageFileContents.png)
 loading only text files
 
 **MySQL database**
@@ -86,14 +86,17 @@ _I Do:_
 -----------------------------------
 **Problem 1**
 -----------------------------------
->    - Installation request for laravel / framework v5.2.13 -> satisfiable by laravel / framework [v5.2.13].
->    - Laravel / framework v5.2.13 requires ext-mbstring * -> the requested PHP extension mbstring is missing from your system.
+```php
+    - Installation request for laravel / framework v5.2.13 -> satisfiable by laravel / framework [v5.2.13].
+    - Laravel / framework v5.2.13 requires ext-mbstring * -> the requested PHP extension mbstring is missing from your system.
+```
 **Problem 2**
 -----------------------------------
->    - Laravel / framework v5.2.13 requires ext-mbstring * -> the requested PHP extension mbstring is missing from your system.
->    - Laravelcollective / html v5.2.4 requires illuminate / http 5.2 * -.> Satisfiable by laravel / framework [v5.2.13].
->    - Installation request for laravelcollective / html v5.2.4 -> satisfiable by laravelcollective / html [v5.2.4].
-
+```php
+    - Laravel / framework v5.2.13 requires ext-mbstring * -> the requested PHP extension mbstring is missing from your system.
+    - Laravelcollective / html v5.2.4 requires illuminate / http 5.2 * -.> Satisfiable by laravel / framework [v5.2.13].
+    - Installation request for laravelcollective / html v5.2.4 -> satisfiable by laravelcollective / html [v5.2.4].
+```
 apt-get install php-mbstring
 [Now something similar write -](http://askubuntu.com/questions/764782/install-laravel-5-on-ubuntu-16-04)
 and extension in php.ini could not be
