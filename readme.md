@@ -46,7 +46,7 @@ After the composer install, gives out when you run the project:
 >- Replace: bindShared () with singleton () on line no: 36 and 49
 >(- Must be replaced bindShared () on the singleton () in line 36 and 49)
 >(Deprecated)
-
+---
 [- This component bug, fix it, but here is the solution,](http://stackoverflow.com/questions/31250211/call-to-undefined-method-illuminate-foundation-applicationbindshared)
 Depending replaced with illuminate / html to laravelcollective / html
 and to establish if there is no component of the composer require laravelcollective / html
