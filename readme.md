@@ -109,6 +109,6 @@ write that it is necessary to establish, as part of the included in the package 
 3. .env database configuration file.
 
 4. `PHPStorm Terminal> php artisan migrate`
-5. `> php artisan db: seed (start siderite, fixtures)`
-although it is possible and without Sidera, upl folder is created and the software.
+5. `> php artisan db: seed (start seeder, fixtures)`
+although it is possible and without Seeder, upl folder is created by the software.
 6. configure the host.
