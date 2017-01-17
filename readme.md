@@ -12,7 +12,7 @@ page output the resulting file structure (frontend)
 ---
 Each uploaded file must be physically popact a folder
 in the same folder should be no more than 10 files, the names must be unique
-![screenshot of tree-structure](https://github.com/mslobodyanyuk/KTTsoft-test/blob/master/images/imageTree.png)
+![screenshot of tree-structure](https://github.com/mslobodyanyuk/KTTsoft-test/blob/master/public/images/imageTree.png)
 
 ---
 authorization, the login is not required
@@ -20,10 +20,10 @@ authorization, the login is not required
 visual interface and a choice of framework / libraries is left to the discretion of the programmer
 
 The database must contain an exact copy of the files in a folder structure, and change with the addition / deletion of files
-![screenshot of table files](https://github.com/mslobodyanyuk/KTTsoft-test/blob/master/images/imageTable.png)
+![screenshot of table files](https://github.com/mslobodyanyuk/KTTsoft-test/blob/master/public/images/imageTable.png)
 
 by clicking on the file name `(frontend)` you can see / download
-![screenshot of file contents](https://github.com/mslobodyanyuk/KTTsoft-test/blob/master/images/imageFileContents.png)
+![screenshot of file contents](https://github.com/mslobodyanyuk/KTTsoft-test/blob/master/public/images/imageFileContents.png)
 loading only text files
 
 **MySQL database**
