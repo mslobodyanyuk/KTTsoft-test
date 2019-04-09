@@ -3,7 +3,7 @@ namespace App\src\Iterator;
 /*
  * Iterator class of abstracts for a single interface access to a collection.
  */
-class IteratorGoods implements IteratorInterFace{
+class IteratorGoods implements IteratorInterface{
     /**
      * @var NodeInterface
      */
@@ -43,13 +43,13 @@ class IteratorGoods implements IteratorInterFace{
      * @param $index
      *
      */
-
     public function seek($index){
         if ($this->root->getId() == $index){
             $this->current = $this->root;
             return;
         }
         $node = $this->find($this->root->getChildren(), $index);
+dump($node);
         if (!$node) {
             echo "Can't find element ".$index;
         }

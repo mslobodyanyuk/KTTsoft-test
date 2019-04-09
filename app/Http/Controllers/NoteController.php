@@ -29,7 +29,7 @@ class NoteController extends Controller
         $dir = new DirUploadFileStructure;
 
         $params = $dataArray = $dir->getDirContent($uplName, "", $content);
-//echo "<pre> dataArray =", var_dump($dataArray) ,"</pre>";
+echo "<pre> dataArray =", var_dump($dataArray) ,"</pre>";
 
         /***********Create a tree structure******************************/
         $factory = new F\GoodsFactory();
@@ -38,11 +38,28 @@ class NoteController extends Controller
             // Gathering wood
         if (!empty($dataArray)) {
             // Sort the array with the data so that the branches was the first.
-            usort($dataArray, create_function('$a,$b','if ((int)$a["parentId"]===(int)$b["parentId"]) return (int)$a["nodeId"]>(int)$b["nodeId"] ? 1 : -1;
-	        return (int)$a["parentId"]>(int)$b["parentId"] ? 1 : -1;'));
+/***********replace create_function with anonymous function*************************************************************************************************/
+            /*
+
+             usort($dataArray, create_function('$a,$b','if ((int)$a["parentId"]===(int)$b["parentId"]) return (int)$a["nodeId"]>(int)$b["nodeId"] ? 1 : -1;
+                        return (int)$a["parentId"]>(int)$b["parentId"] ? 1 : -1;'));
+            */
+
+
+/*usort($dataArray, function($a,$b) { if ((int)$a["parentId"]===(int)$b["parentId"]) return (int)$a["nodeId"]>(int)$b["nodeId"] ? 1 : -1;
+                                    return (int)$a["parentId"]>(int)$b["parentId"] ? 1 : -1;});*/
+
+            $func = function($a,$b) { if ((int)$a['parentId']===(int)$b['parentId']) return (int)$a['nodeId']>(int)$b['nodeId'] ? 1 : -1;
+                                        return (int)$a['parentId']>(int)$b['parentId'] ? 1 : -1;};
+            usort($dataArray, $func);
+
+/***********replace create_function with anonymous function*************************************************************************************************/
+
+
 echo "<pre> Sorted dataArray = ", print_r($dataArray) ,"</pre>";
             foreach ($dataArray as $data) {
                 $iterator = $root->getIterator();
+dump($iterator);
                 $iterator->seek($data['parentId']);
                 $parent = $iterator->current();
                 $item = $factory->create($data);

@@ -106,7 +106,7 @@ To enable extensions, verify that they are enabled in those .ini files:
 write that it is necessary to establish, as part of the included in the package or separately, and uncomment the connect library in php.ini
 + <http://stackoverflow.com/questions/36979019/getting-error-while-update-composer>
 
-3. .env database configuration file.
+3. Сreate database and editing .env database configuration file.
 
 4. `PHPStorm Terminal> php artisan migrate`
 5. `> php artisan db: seed (start seeder, fixtures)`
